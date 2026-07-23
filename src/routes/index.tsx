@@ -107,16 +107,52 @@ function Nav() {
   );
 }
 
+function MatrixRain() {
+  const chars = "01{}<>/=;:()[]+-*&|!?ABCDEF01アカサタナ";
+  const cols = 42;
+  const columns = Array.from({ length: cols }, (_, i) => {
+    const duration = 6 + ((i * 1.37) % 9); // 6s - 15s
+    const delay = -((i * 0.9) % 12);
+    const left = (i / cols) * 100;
+    const opacity = 0.5 + ((i * 7) % 5) / 10; // 0.5 - 0.9
+    const len = 22 + ((i * 3) % 14);
+    const text = Array.from({ length: len }, (_, k) =>
+      chars[(i * 13 + k * 7) % chars.length],
+    ).join("");
+    return { i, duration, delay, left, opacity, text };
+  });
+  return (
+    <div className="matrix-rain" aria-hidden="true">
+      {columns.map((c) => (
+        <span
+          key={c.i}
+          className="matrix-col"
+          style={{
+            left: `${c.left}%`,
+            animationDuration: `${c.duration}s`,
+            animationDelay: `${c.delay}s`,
+            opacity: c.opacity,
+          }}
+        >
+          {c.text}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section
       id="top"
       className="relative flex min-h-screen items-center overflow-hidden"
     >
+      <MatrixRain />
       <div className="absolute inset-0 grid-pattern opacity-40" />
       <div className="mesh-blob mesh-blob-1" />
       <div className="mesh-blob mesh-blob-2" />
       <div className="mesh-blob mesh-blob-3" />
+
 
       <div className="relative mx-auto w-full max-w-7xl px-6 pt-32 pb-20">
         <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 reveal">
