@@ -752,7 +752,7 @@ function ProjectModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      className="modal-fade fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
       role="dialog"
       aria-modal="true"
       aria-label={`${project.name} case study`}
@@ -763,7 +763,7 @@ function ProjectModal({
         onClick={onClose}
         className="absolute inset-0 bg-black/70 backdrop-blur-xl"
       />
-      <div className="relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl">
+      <div className="modal-panel relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl">
         <button
           type="button"
           onClick={onClose}
@@ -776,7 +776,9 @@ function ProjectModal({
         </button>
 
         <div className="overflow-y-auto">
-          <div className={`thumb aspect-[16/7] w-full ${project.images[0]}`} />
+          <div className="aspect-[16/8] w-full bg-[#0a0a0f]">
+            <ProjectMockup slug={project.slug} variant={0} />
+          </div>
 
           <div className="p-8 md:p-12">
             <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -798,10 +800,13 @@ function ProjectModal({
             </p>
 
             <div className="mt-10 grid gap-4 md:grid-cols-2">
-              {project.images.slice(1).map((img, i) => (
-                <div key={i} className={`thumb aspect-[4/3] w-full overflow-hidden rounded-xl ${img}`} />
+              {[1, 2].map((v) => (
+                <MockupFrame key={v} aspect="4/3">
+                  <ProjectMockup slug={project.slug} variant={v} />
+                </MockupFrame>
               ))}
             </div>
+
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">
               {[
