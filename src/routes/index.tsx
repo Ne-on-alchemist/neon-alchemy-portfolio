@@ -299,7 +299,7 @@ function MockupFrame({
   aspect = "16/9",
   className = "",
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   aspect?: string;
   className?: string;
 }) {
