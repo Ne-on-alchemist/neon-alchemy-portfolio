@@ -788,17 +788,25 @@ function ProjectModal({
             </div>
 
 
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
               {[
-                { label: "Problem", body: project.problem, color: "#ff00ff" },
-                { label: "Solution", body: project.solution, color: "#00f0ff" },
-                { label: "Result", body: project.result, color: "#ff00ff" },
+                { label: "Problem", body: project.problem, accent: "#ff00ff" },
+                { label: "Solution", body: project.solution, accent: "#00f0ff" },
+                { label: "Result", body: project.result, accent: "#ff00ff" },
               ].map((b) => (
-                <div key={b.label} className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
-                  <div className="text-[10px] tracked" style={{ color: b.color }}>
+                <div
+                  key={b.label}
+                  className="relative rounded-xl border bg-[#0a0a0f] p-5"
+                  style={{ borderColor: "rgba(0,240,255,0.25)" }}
+                >
+                  <div
+                    className="absolute left-0 top-5 h-6 w-[2px] rounded-r"
+                    style={{ backgroundColor: b.accent, boxShadow: `0 0 12px ${b.accent}` }}
+                  />
+                  <div className="text-[10px] tracked" style={{ color: b.accent }}>
                     {b.label}
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-white/80">
+                  <p className="mt-3 text-sm leading-relaxed text-white/85">
                     {b.body}
                   </p>
                 </div>
