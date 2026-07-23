@@ -669,9 +669,10 @@ function Portfolio() {
                 className="block w-full text-left"
                 aria-label={`View case study: ${p.name}`}
               >
-                <div className={`thumb aspect-[4/3] w-full ${p.thumb}`}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div className="rounded-full bg-black/60 px-5 py-2 text-xs tracked backdrop-blur-md">
+                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-white/10 bg-[#0a0a0f]">
+                  <ProjectMockup slug={p.slug} variant={0} />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="rounded-full border border-[#00f0ff]/40 bg-black/60 px-5 py-2 text-xs tracked text-[#00f0ff] backdrop-blur-md">
                       View Case Study →
                     </div>
                   </div>
