@@ -318,147 +318,137 @@ function MockupFrame({
   );
 }
 
+const NEON_CYAN = "#00f0ff";
+const NEON_MAGENTA = "#ff00ff";
+const NEON_BG = "#0a0a0f";
+const NEON_PANEL = "#12121a";
+const NEON_BORDER = "rgba(255,255,255,0.08)";
+const NEON_MUTED = "#a0a0b0";
+
 function BistroMockup({ variant = 0 }: { variant?: number }) {
   if (variant === 0) {
-    // Hero: dark restaurant landing
     return (
       <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="b-bg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#1a0e0a" />
-            <stop offset="1" stopColor="#0a0a0f" />
-          </linearGradient>
-          <radialGradient id="b-plate" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#c98a4b" />
-            <stop offset="0.6" stopColor="#6b3a1e" />
-            <stop offset="1" stopColor="#20110a" />
+          <radialGradient id="b0-glow" cx="0.75" cy="0.5" r="0.55">
+            <stop offset="0" stopColor={NEON_MAGENTA} stopOpacity="0.25" />
+            <stop offset="1" stopColor={NEON_BG} stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="b0-plate" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#2a2030" />
+            <stop offset="0.7" stopColor="#141018" />
+            <stop offset="1" stopColor={NEON_BG} />
           </radialGradient>
         </defs>
-        <rect width="640" height="320" fill="url(#b-bg)" />
-        {/* nav */}
-        <text x="30" y="34" fontFamily="serif" fontSize="14" fill="#e8c58a" fontStyle="italic">Maison</text>
-        <g fill="#a0a0b0" fontSize="8" fontFamily="sans-serif">
+        <rect width="640" height="320" fill={NEON_BG} />
+        <rect width="640" height="320" fill="url(#b0-glow)" />
+        <text x="30" y="34" fontFamily="serif" fontSize="14" fill={NEON_CYAN} fontStyle="italic">Maison</text>
+        <g fill={NEON_MUTED} fontSize="8" fontFamily="sans-serif" letterSpacing="1.5">
           <text x="440" y="34">MENU</text>
           <text x="490" y="34">STORY</text>
           <text x="540" y="34">VISIT</text>
         </g>
-        <rect x="580" y="22" width="42" height="18" rx="9" fill="#e8c58a" />
-        <text x="587" y="34" fontSize="8" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">RESERVE</text>
-        {/* headline */}
-        <text x="30" y="120" fontFamily="serif" fontSize="42" fill="#f5e8d0" fontStyle="italic">Slow food,</text>
-        <text x="30" y="160" fontFamily="serif" fontSize="42" fill="#e8c58a" fontStyle="italic">warm room.</text>
-        <text x="30" y="190" fontFamily="sans-serif" fontSize="9" fill="#a0a0b0">Seasonal tasting menu · Reservations open</text>
-        <rect x="30" y="210" width="110" height="28" rx="14" fill="#e8c58a" />
-        <text x="52" y="228" fontSize="9" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">BOOK A TABLE →</text>
-        {/* plate image */}
-        <circle cx="490" cy="180" r="95" fill="url(#b-plate)" />
-        <circle cx="490" cy="180" r="95" fill="none" stroke="#3a2210" strokeWidth="2" />
-        <circle cx="470" cy="170" r="22" fill="#8b4a24" opacity="0.85" />
-        <circle cx="505" cy="185" r="18" fill="#c98a4b" opacity="0.7" />
-        <circle cx="485" cy="200" r="10" fill="#4a2a14" />
-        <ellipse cx="500" cy="165" rx="8" ry="4" fill="#e8c58a" opacity="0.6" />
+        <rect x="580" y="22" width="46" height="18" rx="9" fill="none" stroke={NEON_MAGENTA} />
+        <text x="586" y="34" fontSize="8" fill={NEON_MAGENTA} fontFamily="sans-serif" fontWeight="700">RESERVE</text>
+        <text x="30" y="120" fontFamily="serif" fontSize="40" fill="#fff" fontStyle="italic">Slow food,</text>
+        <text x="30" y="160" fontFamily="serif" fontSize="40" fill={NEON_CYAN} fontStyle="italic">warm room.</text>
+        <text x="30" y="188" fontFamily="sans-serif" fontSize="9" fill={NEON_MUTED}>Seasonal tasting menu · Reservations open</text>
+        <rect x="30" y="208" width="118" height="28" rx="14" fill={NEON_CYAN} />
+        <text x="52" y="226" fontSize="9" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700">BOOK A TABLE →</text>
+        <circle cx="490" cy="180" r="98" fill="url(#b0-plate)" stroke={NEON_MAGENTA} strokeOpacity="0.4" />
+        <circle cx="490" cy="180" r="70" fill="none" stroke={NEON_CYAN} strokeOpacity="0.35" strokeDasharray="2 4" />
+        <circle cx="475" cy="170" r="20" fill={NEON_MAGENTA} opacity="0.35" />
+        <circle cx="505" cy="188" r="16" fill={NEON_CYAN} opacity="0.4" />
+        <ellipse cx="500" cy="165" rx="10" ry="4" fill="#fff" opacity="0.35" />
       </svg>
     );
   }
   if (variant === 1) {
-    // Menu grid
     return (
       <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <rect width="640" height="480" fill="#12100c" />
-        <text x="30" y="46" fontFamily="serif" fontSize="22" fill="#e8c58a" fontStyle="italic">The Menu</text>
-        <line x1="30" y1="60" x2="120" y2="60" stroke="#e8c58a" strokeWidth="1" />
+        <rect width="640" height="480" fill={NEON_BG} />
+        <text x="30" y="46" fontFamily="serif" fontSize="22" fill={NEON_CYAN} fontStyle="italic">The Menu</text>
+        <line x1="30" y1="60" x2="120" y2="60" stroke={NEON_MAGENTA} />
         {Array.from({ length: 6 }).map((_, i) => {
           const x = 30 + (i % 3) * 200;
           const y = 90 + Math.floor(i / 3) * 180;
+          const accent = i % 2 === 0 ? NEON_CYAN : NEON_MAGENTA;
           return (
             <g key={i}>
-              <rect x={x} y={y} width="180" height="160" rx="6" fill="#1a1712" />
-              <circle cx={x + 90} cy={y + 60} r="42" fill="#8b4a24" />
-              <circle cx={x + 90} cy={y + 60} r="42" fill="none" stroke="#3a2210" />
-              <circle cx={x + 82} cy={y + 55} r="10" fill="#c98a4b" opacity="0.8" />
-              <text x={x + 12} y={y + 130} fontFamily="serif" fontSize="11" fill="#e8c58a" fontStyle="italic">Course {i + 1}</text>
-              <text x={x + 12} y={y + 146} fontFamily="sans-serif" fontSize="8" fill="#a0a0b0">Seasonal · $18</text>
+              <rect x={x} y={y} width="180" height="160" rx="8" fill={NEON_PANEL} stroke={NEON_BORDER} />
+              <circle cx={x + 90} cy={y + 62} r="40" fill={NEON_BG} stroke={accent} strokeOpacity="0.5" />
+              <circle cx={x + 90} cy={y + 62} r="24" fill={accent} opacity="0.18" />
+              <circle cx={x + 82} cy={y + 55} r="8" fill={accent} opacity="0.5" />
+              <text x={x + 14} y={y + 130} fontFamily="serif" fontSize="11" fill="#fff" fontStyle="italic">Course {i + 1}</text>
+              <text x={x + 14} y={y + 146} fontFamily="sans-serif" fontSize="8" fill={NEON_MUTED} letterSpacing="1">SEASONAL · $18</text>
             </g>
           );
         })}
       </svg>
     );
   }
-  // Reservation form
   return (
     <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-      <rect width="640" height="480" fill="#0f0d0a" />
-      <text x="30" y="50" fontFamily="serif" fontSize="26" fill="#e8c58a" fontStyle="italic">Reserve</text>
-      <rect x="30" y="80" width="580" height="360" rx="8" fill="#1a1712" stroke="#3a2210" />
+      <rect width="640" height="480" fill={NEON_BG} />
+      <text x="30" y="50" fontFamily="serif" fontSize="26" fill={NEON_CYAN} fontStyle="italic">Reserve</text>
+      <rect x="30" y="80" width="580" height="360" rx="10" fill={NEON_PANEL} stroke={NEON_BORDER} />
       {["Party size", "Date", "Time", "Name", "Email"].map((label, i) => (
         <g key={label}>
-          <text x="50" y={120 + i * 55} fontSize="8" fill="#a0a0b0" fontFamily="sans-serif" letterSpacing="2">{label.toUpperCase()}</text>
-          <rect x="50" y={128 + i * 55} width="540" height="30" rx="4" fill="#0a0806" stroke="#3a2210" />
+          <text x="50" y={120 + i * 55} fontSize="8" fill={NEON_MUTED} fontFamily="sans-serif" letterSpacing="2">{label.toUpperCase()}</text>
+          <rect x="50" y={128 + i * 55} width="540" height="30" rx="4" fill={NEON_BG} stroke={NEON_BORDER} />
         </g>
       ))}
-      <rect x="50" y="405" width="540" height="30" rx="4" fill="#e8c58a" />
-      <text x="270" y="425" fontSize="9" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">CONFIRM RESERVATION</text>
+      <rect x="50" y="405" width="540" height="30" rx="4" fill={NEON_CYAN} />
+      <text x="270" y="425" fontSize="9" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700" letterSpacing="1.5">CONFIRM RESERVATION</text>
     </svg>
   );
 }
 
 function SaasMockup({ variant = 0 }: { variant?: number }) {
   if (variant === 0) {
-    // Landing hero
     return (
       <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="s-bg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#0b1220" />
-            <stop offset="1" stopColor="#0a0a0f" />
+          <linearGradient id="s0-btn" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor={NEON_CYAN} />
+            <stop offset="1" stopColor={NEON_MAGENTA} />
           </linearGradient>
-          <linearGradient id="s-btn" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#3b82f6" />
-            <stop offset="1" stopColor="#00f0ff" />
-          </linearGradient>
+          <radialGradient id="s0-glow" cx="0.7" cy="0.4" r="0.6">
+            <stop offset="0" stopColor={NEON_CYAN} stopOpacity="0.2" />
+            <stop offset="1" stopColor={NEON_BG} stopOpacity="0" />
+          </radialGradient>
         </defs>
-        <rect width="640" height="320" fill="url(#s-bg)" />
-        <circle cx="24" cy="30" r="7" fill="#3b82f6" />
-        <text x="38" y="34" fontSize="12" fill="#fff" fontFamily="sans-serif" fontWeight="700">Metricly</text>
-        <g fill="#a0a0b0" fontSize="9" fontFamily="sans-serif">
-          <text x="360" y="34">Product</text>
-          <text x="420" y="34">Pricing</text>
-          <text x="470" y="34">Docs</text>
+        <rect width="640" height="320" fill={NEON_BG} />
+        <rect width="640" height="320" fill="url(#s0-glow)" />
+        <circle cx="26" cy="30" r="7" fill={NEON_CYAN} />
+        <text x="40" y="34" fontSize="12" fill="#fff" fontFamily="sans-serif" fontWeight="700">Metricly</text>
+        <g fill={NEON_MUTED} fontSize="9" fontFamily="sans-serif" letterSpacing="1">
+          <text x="360" y="34">PRODUCT</text>
+          <text x="420" y="34">PRICING</text>
+          <text x="475" y="34">DOCS</text>
         </g>
-        <rect x="540" y="20" width="80" height="22" rx="4" fill="url(#s-btn)" />
-        <text x="562" y="35" fontSize="9" fill="#0a0a0f" fontFamily="sans-serif" fontWeight="700">Start free</text>
+        <rect x="530" y="20" width="90" height="22" rx="11" fill="url(#s0-btn)" />
+        <text x="550" y="35" fontSize="9" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700">START FREE</text>
 
-        <text x="30" y="130" fontSize="34" fill="#fff" fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">Analytics your</text>
-        <text x="30" y="168" fontSize="34" fill="#3b82f6" fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">team will read.</text>
-        <text x="30" y="196" fontSize="10" fill="#a0a0b0" fontFamily="sans-serif">Ship dashboards that answer questions, not raise more.</text>
-        <rect x="30" y="215" width="120" height="34" rx="6" fill="url(#s-btn)" />
-        <text x="52" y="237" fontSize="10" fill="#0a0a0f" fontFamily="sans-serif" fontWeight="700">Try free →</text>
+        <text x="30" y="130" fontSize="32" fill="#fff" fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">Analytics your</text>
+        <text x="30" y="166" fontSize="32" fill={NEON_CYAN} fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">team will read.</text>
+        <text x="30" y="192" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Dashboards that answer questions, not raise more.</text>
+        <rect x="30" y="212" width="130" height="34" rx="17" fill="url(#s0-btn)" />
+        <text x="55" y="234" fontSize="10" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700">TRY FREE →</text>
 
-        {/* dashboard preview */}
         <g transform="translate(360, 90)">
-          <rect x="0" y="0" width="260" height="200" rx="8" fill="#111827" stroke="#1f2937" />
-          <rect x="12" y="12" width="80" height="10" rx="2" fill="#374151" />
-          <rect x="12" y="30" width="236" height="70" rx="4" fill="#0b1220" stroke="#1f2937" />
-          <polyline
-            points="20,90 50,70 80,80 110,55 140,60 170,40 200,50 230,30 245,35"
-            fill="none"
-            stroke="#3b82f6"
-            strokeWidth="2"
-          />
-          <polyline
-            points="20,90 50,80 80,85 110,72 140,75 170,60 200,68 230,55 245,58"
-            fill="none"
-            stroke="#00f0ff"
-            strokeWidth="2"
-            opacity="0.6"
-          />
+          <rect x="0" y="0" width="260" height="200" rx="10" fill={NEON_PANEL} stroke={NEON_BORDER} />
+          <rect x="12" y="12" width="80" height="8" rx="2" fill={NEON_MUTED} opacity="0.5" />
+          <rect x="12" y="30" width="236" height="72" rx="6" fill={NEON_BG} stroke={NEON_BORDER} />
+          <polyline points="20,92 50,72 80,82 110,55 140,60 170,38 200,50 230,28 245,32" fill="none" stroke={NEON_CYAN} strokeWidth="2" />
+          <polyline points="20,92 50,82 80,86 110,72 140,76 170,60 200,68 230,54 245,58" fill="none" stroke={NEON_MAGENTA} strokeWidth="2" opacity="0.7" />
           {Array.from({ length: 3 }).map((_, i) => (
             <g key={i} transform={`translate(${12 + i * 82}, 115)`}>
-              <rect width="70" height="70" rx="4" fill="#0b1220" stroke="#1f2937" />
-              <rect x="8" y="10" width="30" height="6" rx="2" fill="#374151" />
+              <rect width="70" height="70" rx="6" fill={NEON_BG} stroke={NEON_BORDER} />
+              <rect x="8" y="10" width="30" height="5" rx="2" fill={NEON_MUTED} opacity="0.5" />
               <text x="8" y="42" fontSize="16" fill="#fff" fontFamily="sans-serif" fontWeight="700">{["82%", "1.4k", "3.2s"][i]}</text>
-              <rect x="8" y="52" width="54" height="4" rx="2" fill="#1f2937" />
-              <rect x="8" y="52" width={[44, 30, 20][i]} height="4" rx="2" fill="#3b82f6" />
+              <rect x="8" y="52" width="54" height="4" rx="2" fill={NEON_BORDER} />
+              <rect x="8" y="52" width={[44, 30, 20][i]} height="4" rx="2" fill={i === 1 ? NEON_MAGENTA : NEON_CYAN} />
             </g>
           ))}
         </g>
@@ -466,115 +456,102 @@ function SaasMockup({ variant = 0 }: { variant?: number }) {
     );
   }
   if (variant === 1) {
-    // Feature grid
     return (
       <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <rect width="640" height="480" fill="#0b1220" />
+        <rect width="640" height="480" fill={NEON_BG} />
         <text x="30" y="50" fontSize="20" fill="#fff" fontFamily="sans-serif" fontWeight="700">Built for teams that ship</text>
-        <text x="30" y="72" fontSize="10" fill="#a0a0b0" fontFamily="sans-serif">Six primitives. Endless dashboards.</text>
+        <text x="30" y="72" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Six primitives. Endless dashboards.</text>
         {Array.from({ length: 6 }).map((_, i) => {
           const x = 30 + (i % 3) * 200;
           const y = 100 + Math.floor(i / 3) * 170;
+          const accent = i % 2 === 0 ? NEON_CYAN : NEON_MAGENTA;
           return (
             <g key={i}>
-              <rect x={x} y={y} width="180" height="150" rx="8" fill="#111827" stroke="#1f2937" />
-              <rect x={x + 16} y={y + 16} width="28" height="28" rx="6" fill="#0b1220" stroke="#3b82f6" />
-              <rect x={x + 22} y={y + 22} width="16" height="3" rx="1.5" fill="#3b82f6" />
-              <rect x={x + 22} y={y + 30} width="10" height="3" rx="1.5" fill="#3b82f6" />
-              <rect x={x + 22} y={y + 38} width="14" height="3" rx="1.5" fill="#3b82f6" />
-              <rect x={x + 16} y={y + 60} width="120" height="8" rx="2" fill="#374151" />
-              <rect x={x + 16} y={y + 78} width="150" height="4" rx="2" fill="#1f2937" />
-              <rect x={x + 16} y={y + 88} width="130" height="4" rx="2" fill="#1f2937" />
-              <rect x={x + 16} y={y + 98} width="100" height="4" rx="2" fill="#1f2937" />
+              <rect x={x} y={y} width="180" height="150" rx="10" fill={NEON_PANEL} stroke={NEON_BORDER} />
+              <rect x={x + 16} y={y + 16} width="28" height="28" rx="6" fill={NEON_BG} stroke={accent} />
+              <rect x={x + 22} y={y + 22} width="16" height="3" rx="1.5" fill={accent} />
+              <rect x={x + 22} y={y + 30} width="10" height="3" rx="1.5" fill={accent} />
+              <rect x={x + 22} y={y + 38} width="14" height="3" rx="1.5" fill={accent} />
+              <rect x={x + 16} y={y + 60} width="120" height="8" rx="2" fill="#fff" opacity="0.85" />
+              <rect x={x + 16} y={y + 78} width="150" height="4" rx="2" fill={NEON_BORDER} />
+              <rect x={x + 16} y={y + 88} width="130" height="4" rx="2" fill={NEON_BORDER} />
+              <rect x={x + 16} y={y + 98} width="100" height="4" rx="2" fill={NEON_BORDER} />
             </g>
           );
         })}
       </svg>
     );
   }
-  // Dashboard detail
   return (
     <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-      <rect width="640" height="480" fill="#0a0f1a" />
-      <rect x="0" y="0" width="140" height="480" fill="#0b1220" />
-      <rect x="18" y="24" width="90" height="10" rx="2" fill="#3b82f6" />
+      <rect width="640" height="480" fill={NEON_BG} />
+      <rect x="0" y="0" width="140" height="480" fill={NEON_PANEL} />
+      <rect x="18" y="24" width="90" height="10" rx="2" fill={NEON_CYAN} />
       {["Overview", "Reports", "Segments", "Funnels", "Alerts", "Settings"].map((l, i) => (
         <g key={l}>
-          <rect x="18" y={60 + i * 28} width="14" height="14" rx="3" fill={i === 0 ? "#3b82f6" : "#1f2937"} />
-          <text x="40" y={71 + i * 28} fontSize="9" fill={i === 0 ? "#fff" : "#a0a0b0"} fontFamily="sans-serif">{l}</text>
+          <rect x="18" y={60 + i * 28} width="14" height="14" rx="3" fill={i === 0 ? NEON_CYAN : NEON_BORDER} />
+          <text x="40" y={71 + i * 28} fontSize="9" fill={i === 0 ? "#fff" : NEON_MUTED} fontFamily="sans-serif">{l}</text>
         </g>
       ))}
       <text x="160" y="45" fontSize="16" fill="#fff" fontFamily="sans-serif" fontWeight="700">Weekly overview</text>
-      <rect x="160" y="70" width="460" height="180" rx="8" fill="#111827" stroke="#1f2937" />
-      <polyline
-        points="180,220 220,180 260,200 300,150 340,170 380,120 420,140 460,90 500,110 540,80 600,95"
-        fill="none"
-        stroke="#3b82f6"
-        strokeWidth="2.5"
-      />
-      <polyline
-        points="180,230 220,210 260,215 300,190 340,200 380,170 420,180 460,150 500,160 540,140 600,150"
-        fill="none"
-        stroke="#00f0ff"
-        strokeWidth="2"
-        opacity="0.6"
-      />
+      <rect x="160" y="70" width="460" height="180" rx="10" fill={NEON_PANEL} stroke={NEON_BORDER} />
+      <polyline points="180,220 220,180 260,200 300,150 340,170 380,120 420,140 460,90 500,110 540,80 600,95" fill="none" stroke={NEON_CYAN} strokeWidth="2.5" />
+      <polyline points="180,230 220,210 260,215 300,190 340,200 380,170 420,180 460,150 500,160 540,140 600,150" fill="none" stroke={NEON_MAGENTA} strokeWidth="2" opacity="0.7" />
       {Array.from({ length: 3 }).map((_, i) => (
         <g key={i} transform={`translate(${160 + i * 155}, 270)`}>
-          <rect width="145" height="90" rx="6" fill="#111827" stroke="#1f2937" />
-          <text x="14" y="26" fontSize="8" fill="#a0a0b0" fontFamily="sans-serif" letterSpacing="1">{["ACTIVE USERS", "REVENUE", "CONVERSION"][i]}</text>
+          <rect width="145" height="90" rx="8" fill={NEON_PANEL} stroke={NEON_BORDER} />
+          <text x="14" y="26" fontSize="8" fill={NEON_MUTED} fontFamily="sans-serif" letterSpacing="1.5">{["ACTIVE USERS", "REVENUE", "CONVERSION"][i]}</text>
           <text x="14" y="54" fontSize="22" fill="#fff" fontFamily="sans-serif" fontWeight="700">{["12.4k", "$48.2k", "3.8%"][i]}</text>
-          <text x="14" y="74" fontSize="8" fill="#22c55e" fontFamily="sans-serif">▲ {["12%", "8%", "22%"][i]} vs last week</text>
+          <text x="14" y="74" fontSize="8" fill={NEON_CYAN} fontFamily="sans-serif">▲ {["12%", "8%", "22%"][i]} vs last week</text>
         </g>
       ))}
-      <rect x="160" y="380" width="460" height="80" rx="8" fill="#111827" stroke="#1f2937" />
+      <rect x="160" y="380" width="460" height="80" rx="8" fill={NEON_PANEL} stroke={NEON_BORDER} />
       {Array.from({ length: 12 }).map((_, i) => (
-        <rect key={i} x={175 + i * 37} y={390 + (i % 3) * 4} width="26" height={40 + (i * 5) % 30} rx="2" fill="#3b82f6" opacity={0.4 + (i % 5) * 0.12} />
+        <rect key={i} x={175 + i * 37} y={390 + (i % 3) * 4} width="26" height={40 + (i * 5) % 30} rx="2" fill={i % 2 === 0 ? NEON_CYAN : NEON_MAGENTA} opacity={0.35 + (i % 5) * 0.12} />
       ))}
     </svg>
   );
 }
 
 function EcommerceMockup({ variant = 0 }: { variant?: number }) {
-  const swatches = ["#f5d0c5", "#c5d5f5", "#d5f5c5", "#f5eec5", "#e5c5f5", "#c5f5ee", "#f5c5d5", "#c5e5f5"];
   if (variant === 0) {
-    // Product grid with cart
     return (
       <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <rect width="640" height="320" fill="#f6f4ef" />
-        {/* nav */}
-        <rect x="0" y="0" width="640" height="36" fill="#fff" />
-        <text x="20" y="24" fontSize="13" fill="#111" fontFamily="serif" fontWeight="700">SHOP LOCAL</text>
-        <g fill="#333" fontSize="9" fontFamily="sans-serif">
-          <text x="200" y="23">New</text>
-          <text x="240" y="23">Home</text>
-          <text x="285" y="23">Kitchen</text>
-          <text x="335" y="23">Apparel</text>
-          <text x="385" y="23">Gifts</text>
+        <defs>
+          <radialGradient id="e0-glow" cx="0.5" cy="0" r="0.7">
+            <stop offset="0" stopColor={NEON_MAGENTA} stopOpacity="0.15" />
+            <stop offset="1" stopColor={NEON_BG} stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <rect width="640" height="320" fill={NEON_BG} />
+        <rect width="640" height="320" fill="url(#e0-glow)" />
+        <rect x="0" y="0" width="640" height="36" fill={NEON_PANEL} />
+        <text x="20" y="24" fontSize="12" fill={NEON_CYAN} fontFamily="sans-serif" fontWeight="700" letterSpacing="2">SHOP/LOCAL</text>
+        <g fill={NEON_MUTED} fontSize="9" fontFamily="sans-serif" letterSpacing="1">
+          <text x="200" y="23">NEW</text>
+          <text x="240" y="23">HOME</text>
+          <text x="290" y="23">KITCHEN</text>
+          <text x="345" y="23">APPAREL</text>
+          <text x="400" y="23">GIFTS</text>
         </g>
-        {/* search */}
-        <rect x="440" y="10" width="120" height="16" rx="8" fill="#f0ede6" />
-        <text x="448" y="21" fontSize="8" fill="#999" fontFamily="sans-serif">Search products…</text>
-        {/* cart */}
-        <circle cx="580" cy="18" r="4" fill="none" stroke="#111" strokeWidth="1.2" />
-        <path d="M576 14 L584 14 L582 20 L578 20 Z" fill="none" stroke="#111" strokeWidth="1.2" />
-        <circle cx="586" cy="12" r="5" fill="#ff00ff" />
-        <text x="583.5" y="14.5" fontSize="6" fill="#fff" fontFamily="sans-serif" fontWeight="700">3</text>
-        <text x="596" y="22" fontSize="9" fill="#111" fontFamily="sans-serif" fontWeight="700">$84</text>
+        <rect x="450" y="10" width="110" height="16" rx="8" fill={NEON_BG} stroke={NEON_BORDER} />
+        <text x="458" y="21" fontSize="8" fill={NEON_MUTED} fontFamily="sans-serif">Search products…</text>
+        <circle cx="586" cy="12" r="5" fill={NEON_MAGENTA} />
+        <text x="583.5" y="14.5" fontSize="6" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700">3</text>
+        <text x="596" y="22" fontSize="9" fill={NEON_CYAN} fontFamily="sans-serif" fontWeight="700">$84</text>
 
-        {/* filters */}
-        <text x="20" y="60" fontSize="9" fill="#666" fontFamily="sans-serif" letterSpacing="1.5">FILTER · 248 ITEMS</text>
-        {/* product grid */}
+        <text x="20" y="60" fontSize="9" fill={NEON_MUTED} fontFamily="sans-serif" letterSpacing="1.5">FILTER · 248 ITEMS</text>
         {Array.from({ length: 8 }).map((_, i) => {
           const x = 20 + (i % 4) * 155;
           const y = 78 + Math.floor(i / 4) * 120;
+          const accent = i % 2 === 0 ? NEON_CYAN : NEON_MAGENTA;
           return (
             <g key={i}>
-              <rect x={x} y={y} width="140" height="90" rx="4" fill={swatches[i]} />
-              <circle cx={x + 70} cy={y + 45} r="26" fill="#fff" opacity="0.5" />
-              <rect x={x + 55} y={y + 32} width="30" height="26" rx="3" fill="#333" opacity="0.55" />
-              <text x={x} y={y + 104} fontSize="8" fill="#111" fontFamily="sans-serif" fontWeight="700">Item {i + 1}</text>
-              <text x={x + 108} y={y + 104} fontSize="8" fill="#111" fontFamily="sans-serif">${18 + i * 4}</text>
+              <rect x={x} y={y} width="140" height="90" rx="6" fill={NEON_PANEL} stroke={NEON_BORDER} />
+              <rect x={x + 40} y={y + 20} width="60" height="50" rx="6" fill={NEON_BG} stroke={accent} strokeOpacity="0.5" />
+              <circle cx={x + 70} cy={y + 45} r="14" fill={accent} opacity="0.25" />
+              <text x={x + 10} y={y + 104} fontSize="8" fill="#fff" fontFamily="sans-serif" fontWeight="700">Item {i + 1}</text>
+              <text x={x + 110} y={y + 104} fontSize="8" fill={accent} fontFamily="sans-serif" fontWeight="700">${18 + i * 4}</text>
             </g>
           );
         })}
@@ -582,60 +559,62 @@ function EcommerceMockup({ variant = 0 }: { variant?: number }) {
     );
   }
   if (variant === 1) {
-    // Product detail
     return (
       <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <rect width="640" height="480" fill="#f6f4ef" />
-        <rect x="30" y="30" width="280" height="420" rx="8" fill="#e8c8b6" />
-        <circle cx="170" cy="220" r="100" fill="#fff" opacity="0.55" />
-        <rect x="140" y="180" width="60" height="70" rx="6" fill="#8b4a24" />
+        <rect width="640" height="480" fill={NEON_BG} />
+        <rect x="30" y="30" width="280" height="420" rx="10" fill={NEON_PANEL} stroke={NEON_BORDER} />
+        <circle cx="170" cy="220" r="100" fill="none" stroke={NEON_CYAN} strokeOpacity="0.4" strokeDasharray="3 5" />
+        <rect x="140" y="180" width="60" height="80" rx="8" fill={NEON_BG} stroke={NEON_MAGENTA} />
+        <circle cx="170" cy="205" r="12" fill={NEON_MAGENTA} opacity="0.35" />
         {[0, 1, 2, 3].map((i) => (
-          <rect key={i} x={30 + i * 66} y="460" width="56" height="10" rx="2" fill="#e8c8b6" opacity={i === 0 ? 1 : 0.5} />
+          <rect key={i} x={30 + i * 66} y="462" width="56" height="10" rx="2" fill={i === 0 ? NEON_CYAN : NEON_BORDER} opacity={i === 0 ? 1 : 0.6} />
         ))}
-        <text x="340" y="60" fontSize="9" fill="#999" fontFamily="sans-serif" letterSpacing="2">CERAMICS</text>
-        <text x="340" y="100" fontSize="26" fill="#111" fontFamily="serif" fontWeight="700">Hand-thrown Vase</text>
-        <text x="340" y="128" fontSize="18" fill="#111" fontFamily="sans-serif">$68.00</text>
-        <line x1="340" y1="150" x2="600" y2="150" stroke="#e5e0d5" />
-        <text x="340" y="176" fontSize="10" fill="#666" fontFamily="sans-serif">Small-batch stoneware from a</text>
-        <text x="340" y="192" fontSize="10" fill="#666" fontFamily="sans-serif">Portland studio. Each piece varies.</text>
-        <text x="340" y="228" fontSize="8" fill="#111" fontFamily="sans-serif" letterSpacing="1.5">COLOR</text>
-        {["#e8c8b6", "#c5d5f5", "#333"].map((c, i) => (
-          <circle key={c} cx={350 + i * 26} cy="248" r="9" fill={c} stroke={i === 0 ? "#111" : "transparent"} strokeWidth="1.5" />
+        <text x="340" y="60" fontSize="9" fill={NEON_MAGENTA} fontFamily="sans-serif" letterSpacing="2">CERAMICS</text>
+        <text x="340" y="100" fontSize="26" fill="#fff" fontFamily="serif" fontWeight="700">Hand-thrown Vase</text>
+        <text x="340" y="128" fontSize="18" fill={NEON_CYAN} fontFamily="sans-serif" fontWeight="700">$68.00</text>
+        <line x1="340" y1="150" x2="600" y2="150" stroke={NEON_BORDER} />
+        <text x="340" y="176" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Small-batch stoneware from a</text>
+        <text x="340" y="192" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Portland studio. Each piece varies.</text>
+        <text x="340" y="228" fontSize="8" fill={NEON_MUTED} fontFamily="sans-serif" letterSpacing="1.5">COLOR</text>
+        {[NEON_CYAN, NEON_MAGENTA, "#fff"].map((c, i) => (
+          <circle key={c} cx={350 + i * 26} cy="248" r="9" fill={c} opacity={i === 0 ? 1 : 0.5} stroke={i === 0 ? "#fff" : "transparent"} strokeWidth="1.5" />
         ))}
-        <text x="340" y="288" fontSize="8" fill="#111" fontFamily="sans-serif" letterSpacing="1.5">QUANTITY</text>
-        <rect x="340" y="298" width="90" height="30" rx="4" fill="#fff" stroke="#ddd" />
-        <text x="380" y="318" fontSize="11" fill="#111" fontFamily="sans-serif">1</text>
-        <rect x="340" y="345" width="260" height="38" rx="4" fill="#111" />
-        <text x="410" y="369" fontSize="11" fill="#fff" fontFamily="sans-serif" fontWeight="700">Add to cart · $68</text>
-        <rect x="340" y="392" width="260" height="38" rx="4" fill="none" stroke="#111" />
-        <text x="410" y="416" fontSize="11" fill="#111" fontFamily="sans-serif">Buy it now</text>
+        <text x="340" y="288" fontSize="8" fill={NEON_MUTED} fontFamily="sans-serif" letterSpacing="1.5">QUANTITY</text>
+        <rect x="340" y="298" width="90" height="30" rx="4" fill={NEON_BG} stroke={NEON_BORDER} />
+        <text x="380" y="318" fontSize="11" fill="#fff" fontFamily="sans-serif">1</text>
+        <rect x="340" y="345" width="260" height="38" rx="6" fill={NEON_CYAN} />
+        <text x="410" y="369" fontSize="11" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700">ADD TO CART · $68</text>
+        <rect x="340" y="392" width="260" height="38" rx="6" fill="none" stroke={NEON_MAGENTA} />
+        <text x="410" y="416" fontSize="11" fill={NEON_MAGENTA} fontFamily="sans-serif" fontWeight="700">BUY IT NOW</text>
       </svg>
     );
   }
-  // Cart drawer
   return (
     <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-      <rect width="640" height="480" fill="#f6f4ef" opacity="0.5" />
-      <rect x="240" y="0" width="400" height="480" fill="#fff" />
-      <text x="264" y="46" fontSize="16" fill="#111" fontFamily="serif" fontWeight="700">Your cart (3)</text>
-      <line x1="264" y1="66" x2="616" y2="66" stroke="#eee" />
-      {[0, 1, 2].map((i) => (
-        <g key={i} transform={`translate(264, ${80 + i * 100})`}>
-          <rect width="80" height="80" rx="4" fill={swatches[i]} />
-          <circle cx="40" cy="40" r="22" fill="#fff" opacity="0.5" />
-          <text x="94" y="20" fontSize="11" fill="#111" fontFamily="sans-serif" fontWeight="700">{["Hand-thrown Vase", "Linen Napkins", "Cedar Cutting Board"][i]}</text>
-          <text x="94" y="36" fontSize="9" fill="#999" fontFamily="sans-serif">Color · Natural</text>
-          <text x="94" y="72" fontSize="10" fill="#111" fontFamily="sans-serif">Qty 1</text>
-          <text x="320" y="20" fontSize="11" fill="#111" fontFamily="sans-serif" fontWeight="700" textAnchor="end">${[68, 24, 48][i]}</text>
-          <line x1="0" y1="90" x2="352" y2="90" stroke="#eee" />
-        </g>
-      ))}
-      <text x="264" y="400" fontSize="10" fill="#666" fontFamily="sans-serif">Subtotal</text>
-      <text x="616" y="400" fontSize="10" fill="#111" fontFamily="sans-serif" fontWeight="700" textAnchor="end">$140.00</text>
-      <text x="264" y="418" fontSize="10" fill="#666" fontFamily="sans-serif">Shipping</text>
-      <text x="616" y="418" fontSize="10" fill="#111" fontFamily="sans-serif" textAnchor="end">Free</text>
-      <rect x="264" y="432" width="352" height="34" rx="4" fill="#111" />
-      <text x="440" y="454" fontSize="11" fill="#fff" fontFamily="sans-serif" fontWeight="700" textAnchor="middle">Checkout →</text>
+      <rect width="640" height="480" fill={NEON_BG} opacity="0.8" />
+      <rect x="240" y="0" width="400" height="480" fill={NEON_PANEL} />
+      <text x="264" y="46" fontSize="16" fill="#fff" fontFamily="serif" fontWeight="700">Your cart <tspan fill={NEON_CYAN}>(3)</tspan></text>
+      <line x1="264" y1="66" x2="616" y2="66" stroke={NEON_BORDER} />
+      {[0, 1, 2].map((i) => {
+        const accent = i % 2 === 0 ? NEON_CYAN : NEON_MAGENTA;
+        return (
+          <g key={i} transform={`translate(264, ${80 + i * 100})`}>
+            <rect width="80" height="80" rx="6" fill={NEON_BG} stroke={accent} strokeOpacity="0.5" />
+            <circle cx="40" cy="40" r="18" fill={accent} opacity="0.25" />
+            <text x="94" y="20" fontSize="11" fill="#fff" fontFamily="sans-serif" fontWeight="700">{["Hand-thrown Vase", "Linen Napkins", "Cedar Cutting Board"][i]}</text>
+            <text x="94" y="36" fontSize="9" fill={NEON_MUTED} fontFamily="sans-serif">Color · Natural</text>
+            <text x="94" y="72" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Qty 1</text>
+            <text x="336" y="20" fontSize="11" fill={accent} fontFamily="sans-serif" fontWeight="700" textAnchor="end">${[68, 24, 48][i]}</text>
+            <line x1="0" y1="90" x2="352" y2="90" stroke={NEON_BORDER} />
+          </g>
+        );
+      })}
+      <text x="264" y="400" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Subtotal</text>
+      <text x="616" y="400" fontSize="10" fill="#fff" fontFamily="sans-serif" fontWeight="700" textAnchor="end">$140.00</text>
+      <text x="264" y="418" fontSize="10" fill={NEON_MUTED} fontFamily="sans-serif">Shipping</text>
+      <text x="616" y="418" fontSize="10" fill={NEON_CYAN} fontFamily="sans-serif" textAnchor="end">Free</text>
+      <rect x="264" y="432" width="352" height="34" rx="6" fill={NEON_CYAN} />
+      <text x="440" y="454" fontSize="11" fill={NEON_BG} fontFamily="sans-serif" fontWeight="700" textAnchor="middle" letterSpacing="1.5">CHECKOUT →</text>
     </svg>
   );
 }
@@ -690,9 +669,10 @@ function Portfolio() {
                 className="block w-full text-left"
                 aria-label={`View case study: ${p.name}`}
               >
-                <div className={`thumb aspect-[4/3] w-full ${p.thumb}`}>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div className="rounded-full bg-black/60 px-5 py-2 text-xs tracked backdrop-blur-md">
+                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-white/10 bg-[#0a0a0f]">
+                  <ProjectMockup slug={p.slug} variant={0} />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 backdrop-blur-sm transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="rounded-full border border-[#00f0ff]/40 bg-black/60 px-5 py-2 text-xs tracked text-[#00f0ff] backdrop-blur-md">
                       View Case Study →
                     </div>
                   </div>
@@ -763,7 +743,7 @@ function ProjectModal({
         onClick={onClose}
         className="absolute inset-0 bg-black/70 backdrop-blur-xl"
       />
-      <div className="modal-panel relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl">
+      <div className="modal-panel relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[#00f0ff]/20 bg-[#0a0a0f] shadow-[0_0_60px_rgba(0,240,255,0.15)]">
         <button
           type="button"
           onClick={onClose}
@@ -808,17 +788,25 @@ function ProjectModal({
             </div>
 
 
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
+            <div className="mt-12 grid gap-4 md:grid-cols-3">
               {[
-                { label: "Problem", body: project.problem, color: "#ff00ff" },
-                { label: "Solution", body: project.solution, color: "#00f0ff" },
-                { label: "Result", body: project.result, color: "#ff00ff" },
+                { label: "Problem", body: project.problem, accent: "#ff00ff" },
+                { label: "Solution", body: project.solution, accent: "#00f0ff" },
+                { label: "Result", body: project.result, accent: "#ff00ff" },
               ].map((b) => (
-                <div key={b.label} className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
-                  <div className="text-[10px] tracked" style={{ color: b.color }}>
+                <div
+                  key={b.label}
+                  className="relative rounded-xl border bg-[#0a0a0f] p-5"
+                  style={{ borderColor: "rgba(0,240,255,0.25)" }}
+                >
+                  <div
+                    className="absolute left-0 top-5 h-6 w-[2px] rounded-r"
+                    style={{ backgroundColor: b.accent, boxShadow: `0 0 12px ${b.accent}` }}
+                  />
+                  <div className="text-[10px] tracked" style={{ color: b.accent }}>
                     {b.label}
                   </div>
-                  <p className="mt-3 text-sm leading-relaxed text-white/80">
+                  <p className="mt-3 text-sm leading-relaxed text-white/85">
                     {b.body}
                   </p>
                 </div>
