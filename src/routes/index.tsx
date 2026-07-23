@@ -230,16 +230,18 @@ function Hero() {
   );
 }
 
+type ProjectSlug = "bistro" | "saas" | "ecommerce";
+
 type Project = {
   name: string;
   category: string;
   metric: string;
   thumb: string;
+  slug: ProjectSlug;
   problem: string;
   solution: string;
   result: string;
   overview: string;
-  images: string[];
 };
 
 const projects: Project[] = [
@@ -248,6 +250,7 @@ const projects: Project[] = [
     category: "Restaurant",
     metric: "+40% bookings",
     thumb: "thumb-1",
+    slug: "bistro",
     overview:
       "A neighborhood bistro needed a landing page that turned casual browsers into confirmed reservations, not just a digital menu.",
     problem:
@@ -256,13 +259,13 @@ const projects: Project[] = [
       "Rebuilt with a single-scroll structure: hero → menu highlights → reservation CTA sticky on mobile. Replaced video with a CSS gradient and lazy-loaded dish photography.",
     result:
       "Bookings up 40% within the first month. Mobile page load dropped from 6.2s to 1.1s. Bounce rate cut in half.",
-    images: ["thumb-1", "thumb-2", "thumb-3"],
   },
   {
     name: "SaaS Launch",
     category: "Product Page",
     metric: "3× conversion",
     thumb: "thumb-2",
+    slug: "saas",
     overview:
       "A B2B analytics SaaS was launching v2 and needed a product page that clearly communicated a technical value prop to non-technical buyers.",
     problem:
@@ -271,13 +274,13 @@ const projects: Project[] = [
       "Restructured around a single hero benefit, an interactive product tour, and social proof positioned exactly where objections spike.",
     result:
       "Free-trial signups tripled in the first quarter. Sales-qualified lead rate up 62%.",
-    images: ["thumb-2", "thumb-3", "thumb-1"],
   },
   {
     name: "Shop Local",
     category: "E-commerce",
     metric: "+150% revenue",
     thumb: "thumb-3",
+    slug: "ecommerce",
     overview:
       "An independent goods marketplace wanted to compete with big-box e-commerce without matching their engineering budget.",
     problem:
@@ -286,9 +289,369 @@ const projects: Project[] = [
       "Introduced faceted search, guest checkout, and a distinctive editorial homepage that leaned into the marketplace's curatorial identity.",
     result:
       "Revenue up 150% year-over-year. Cart abandonment down 34%. Repeat-purchase rate up 2.1×.",
-    images: ["thumb-3", "thumb-1", "thumb-2"],
   },
 ];
+
+/* ---------- SVG project mockups (realistic website previews) ---------- */
+
+function MockupFrame({
+  children,
+  aspect = "16/9",
+  className = "",
+}: {
+  children: React.ReactNode;
+  aspect?: string;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0f] ${className}`}
+      style={{ aspectRatio: aspect }}
+    >
+      <div className="flex h-6 items-center gap-1.5 border-b border-white/10 bg-black/40 px-3">
+        <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
+        <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
+        <span className="h-2 w-2 rounded-full bg-[#28c840]" />
+      </div>
+      <div className="absolute inset-x-0 bottom-0 top-6">{children}</div>
+    </div>
+  );
+}
+
+function BistroMockup({ variant = 0 }: { variant?: number }) {
+  if (variant === 0) {
+    // Hero: dark restaurant landing
+    return (
+      <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="b-bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#1a0e0a" />
+            <stop offset="1" stopColor="#0a0a0f" />
+          </linearGradient>
+          <radialGradient id="b-plate" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#c98a4b" />
+            <stop offset="0.6" stopColor="#6b3a1e" />
+            <stop offset="1" stopColor="#20110a" />
+          </radialGradient>
+        </defs>
+        <rect width="640" height="320" fill="url(#b-bg)" />
+        {/* nav */}
+        <text x="30" y="34" fontFamily="serif" fontSize="14" fill="#e8c58a" fontStyle="italic">Maison</text>
+        <g fill="#a0a0b0" fontSize="8" fontFamily="sans-serif">
+          <text x="440" y="34">MENU</text>
+          <text x="490" y="34">STORY</text>
+          <text x="540" y="34">VISIT</text>
+        </g>
+        <rect x="580" y="22" width="42" height="18" rx="9" fill="#e8c58a" />
+        <text x="587" y="34" fontSize="8" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">RESERVE</text>
+        {/* headline */}
+        <text x="30" y="120" fontFamily="serif" fontSize="42" fill="#f5e8d0" fontStyle="italic">Slow food,</text>
+        <text x="30" y="160" fontFamily="serif" fontSize="42" fill="#e8c58a" fontStyle="italic">warm room.</text>
+        <text x="30" y="190" fontFamily="sans-serif" fontSize="9" fill="#a0a0b0">Seasonal tasting menu · Reservations open</text>
+        <rect x="30" y="210" width="110" height="28" rx="14" fill="#e8c58a" />
+        <text x="52" y="228" fontSize="9" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">BOOK A TABLE →</text>
+        {/* plate image */}
+        <circle cx="490" cy="180" r="95" fill="url(#b-plate)" />
+        <circle cx="490" cy="180" r="95" fill="none" stroke="#3a2210" strokeWidth="2" />
+        <circle cx="470" cy="170" r="22" fill="#8b4a24" opacity="0.85" />
+        <circle cx="505" cy="185" r="18" fill="#c98a4b" opacity="0.7" />
+        <circle cx="485" cy="200" r="10" fill="#4a2a14" />
+        <ellipse cx="500" cy="165" rx="8" ry="4" fill="#e8c58a" opacity="0.6" />
+      </svg>
+    );
+  }
+  if (variant === 1) {
+    // Menu grid
+    return (
+      <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <rect width="640" height="480" fill="#12100c" />
+        <text x="30" y="46" fontFamily="serif" fontSize="22" fill="#e8c58a" fontStyle="italic">The Menu</text>
+        <line x1="30" y1="60" x2="120" y2="60" stroke="#e8c58a" strokeWidth="1" />
+        {Array.from({ length: 6 }).map((_, i) => {
+          const x = 30 + (i % 3) * 200;
+          const y = 90 + Math.floor(i / 3) * 180;
+          return (
+            <g key={i}>
+              <rect x={x} y={y} width="180" height="160" rx="6" fill="#1a1712" />
+              <circle cx={x + 90} cy={y + 60} r="42" fill="#8b4a24" />
+              <circle cx={x + 90} cy={y + 60} r="42" fill="none" stroke="#3a2210" />
+              <circle cx={x + 82} cy={y + 55} r="10" fill="#c98a4b" opacity="0.8" />
+              <text x={x + 12} y={y + 130} fontFamily="serif" fontSize="11" fill="#e8c58a" fontStyle="italic">Course {i + 1}</text>
+              <text x={x + 12} y={y + 146} fontFamily="sans-serif" fontSize="8" fill="#a0a0b0">Seasonal · $18</text>
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+  // Reservation form
+  return (
+    <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+      <rect width="640" height="480" fill="#0f0d0a" />
+      <text x="30" y="50" fontFamily="serif" fontSize="26" fill="#e8c58a" fontStyle="italic">Reserve</text>
+      <rect x="30" y="80" width="580" height="360" rx="8" fill="#1a1712" stroke="#3a2210" />
+      {["Party size", "Date", "Time", "Name", "Email"].map((label, i) => (
+        <g key={label}>
+          <text x="50" y={120 + i * 55} fontSize="8" fill="#a0a0b0" fontFamily="sans-serif" letterSpacing="2">{label.toUpperCase()}</text>
+          <rect x="50" y={128 + i * 55} width="540" height="30" rx="4" fill="#0a0806" stroke="#3a2210" />
+        </g>
+      ))}
+      <rect x="50" y="405" width="540" height="30" rx="4" fill="#e8c58a" />
+      <text x="270" y="425" fontSize="9" fill="#1a0e0a" fontFamily="sans-serif" fontWeight="700">CONFIRM RESERVATION</text>
+    </svg>
+  );
+}
+
+function SaasMockup({ variant = 0 }: { variant?: number }) {
+  if (variant === 0) {
+    // Landing hero
+    return (
+      <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="s-bg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#0b1220" />
+            <stop offset="1" stopColor="#0a0a0f" />
+          </linearGradient>
+          <linearGradient id="s-btn" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#3b82f6" />
+            <stop offset="1" stopColor="#00f0ff" />
+          </linearGradient>
+        </defs>
+        <rect width="640" height="320" fill="url(#s-bg)" />
+        <circle cx="24" cy="30" r="7" fill="#3b82f6" />
+        <text x="38" y="34" fontSize="12" fill="#fff" fontFamily="sans-serif" fontWeight="700">Metricly</text>
+        <g fill="#a0a0b0" fontSize="9" fontFamily="sans-serif">
+          <text x="360" y="34">Product</text>
+          <text x="420" y="34">Pricing</text>
+          <text x="470" y="34">Docs</text>
+        </g>
+        <rect x="540" y="20" width="80" height="22" rx="4" fill="url(#s-btn)" />
+        <text x="562" y="35" fontSize="9" fill="#0a0a0f" fontFamily="sans-serif" fontWeight="700">Start free</text>
+
+        <text x="30" y="130" fontSize="34" fill="#fff" fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">Analytics your</text>
+        <text x="30" y="168" fontSize="34" fill="#3b82f6" fontFamily="sans-serif" fontWeight="700" letterSpacing="-1">team will read.</text>
+        <text x="30" y="196" fontSize="10" fill="#a0a0b0" fontFamily="sans-serif">Ship dashboards that answer questions, not raise more.</text>
+        <rect x="30" y="215" width="120" height="34" rx="6" fill="url(#s-btn)" />
+        <text x="52" y="237" fontSize="10" fill="#0a0a0f" fontFamily="sans-serif" fontWeight="700">Try free →</text>
+
+        {/* dashboard preview */}
+        <g transform="translate(360, 90)">
+          <rect x="0" y="0" width="260" height="200" rx="8" fill="#111827" stroke="#1f2937" />
+          <rect x="12" y="12" width="80" height="10" rx="2" fill="#374151" />
+          <rect x="12" y="30" width="236" height="70" rx="4" fill="#0b1220" stroke="#1f2937" />
+          <polyline
+            points="20,90 50,70 80,80 110,55 140,60 170,40 200,50 230,30 245,35"
+            fill="none"
+            stroke="#3b82f6"
+            strokeWidth="2"
+          />
+          <polyline
+            points="20,90 50,80 80,85 110,72 140,75 170,60 200,68 230,55 245,58"
+            fill="none"
+            stroke="#00f0ff"
+            strokeWidth="2"
+            opacity="0.6"
+          />
+          {Array.from({ length: 3 }).map((_, i) => (
+            <g key={i} transform={`translate(${12 + i * 82}, 115)`}>
+              <rect width="70" height="70" rx="4" fill="#0b1220" stroke="#1f2937" />
+              <rect x="8" y="10" width="30" height="6" rx="2" fill="#374151" />
+              <text x="8" y="42" fontSize="16" fill="#fff" fontFamily="sans-serif" fontWeight="700">{["82%", "1.4k", "3.2s"][i]}</text>
+              <rect x="8" y="52" width="54" height="4" rx="2" fill="#1f2937" />
+              <rect x="8" y="52" width={[44, 30, 20][i]} height="4" rx="2" fill="#3b82f6" />
+            </g>
+          ))}
+        </g>
+      </svg>
+    );
+  }
+  if (variant === 1) {
+    // Feature grid
+    return (
+      <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <rect width="640" height="480" fill="#0b1220" />
+        <text x="30" y="50" fontSize="20" fill="#fff" fontFamily="sans-serif" fontWeight="700">Built for teams that ship</text>
+        <text x="30" y="72" fontSize="10" fill="#a0a0b0" fontFamily="sans-serif">Six primitives. Endless dashboards.</text>
+        {Array.from({ length: 6 }).map((_, i) => {
+          const x = 30 + (i % 3) * 200;
+          const y = 100 + Math.floor(i / 3) * 170;
+          return (
+            <g key={i}>
+              <rect x={x} y={y} width="180" height="150" rx="8" fill="#111827" stroke="#1f2937" />
+              <rect x={x + 16} y={y + 16} width="28" height="28" rx="6" fill="#0b1220" stroke="#3b82f6" />
+              <rect x={x + 22} y={y + 22} width="16" height="3" rx="1.5" fill="#3b82f6" />
+              <rect x={x + 22} y={y + 30} width="10" height="3" rx="1.5" fill="#3b82f6" />
+              <rect x={x + 22} y={y + 38} width="14" height="3" rx="1.5" fill="#3b82f6" />
+              <rect x={x + 16} y={y + 60} width="120" height="8" rx="2" fill="#374151" />
+              <rect x={x + 16} y={y + 78} width="150" height="4" rx="2" fill="#1f2937" />
+              <rect x={x + 16} y={y + 88} width="130" height="4" rx="2" fill="#1f2937" />
+              <rect x={x + 16} y={y + 98} width="100" height="4" rx="2" fill="#1f2937" />
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+  // Dashboard detail
+  return (
+    <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+      <rect width="640" height="480" fill="#0a0f1a" />
+      <rect x="0" y="0" width="140" height="480" fill="#0b1220" />
+      <rect x="18" y="24" width="90" height="10" rx="2" fill="#3b82f6" />
+      {["Overview", "Reports", "Segments", "Funnels", "Alerts", "Settings"].map((l, i) => (
+        <g key={l}>
+          <rect x="18" y={60 + i * 28} width="14" height="14" rx="3" fill={i === 0 ? "#3b82f6" : "#1f2937"} />
+          <text x="40" y={71 + i * 28} fontSize="9" fill={i === 0 ? "#fff" : "#a0a0b0"} fontFamily="sans-serif">{l}</text>
+        </g>
+      ))}
+      <text x="160" y="45" fontSize="16" fill="#fff" fontFamily="sans-serif" fontWeight="700">Weekly overview</text>
+      <rect x="160" y="70" width="460" height="180" rx="8" fill="#111827" stroke="#1f2937" />
+      <polyline
+        points="180,220 220,180 260,200 300,150 340,170 380,120 420,140 460,90 500,110 540,80 600,95"
+        fill="none"
+        stroke="#3b82f6"
+        strokeWidth="2.5"
+      />
+      <polyline
+        points="180,230 220,210 260,215 300,190 340,200 380,170 420,180 460,150 500,160 540,140 600,150"
+        fill="none"
+        stroke="#00f0ff"
+        strokeWidth="2"
+        opacity="0.6"
+      />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <g key={i} transform={`translate(${160 + i * 155}, 270)`}>
+          <rect width="145" height="90" rx="6" fill="#111827" stroke="#1f2937" />
+          <text x="14" y="26" fontSize="8" fill="#a0a0b0" fontFamily="sans-serif" letterSpacing="1">{["ACTIVE USERS", "REVENUE", "CONVERSION"][i]}</text>
+          <text x="14" y="54" fontSize="22" fill="#fff" fontFamily="sans-serif" fontWeight="700">{["12.4k", "$48.2k", "3.8%"][i]}</text>
+          <text x="14" y="74" fontSize="8" fill="#22c55e" fontFamily="sans-serif">▲ {["12%", "8%", "22%"][i]} vs last week</text>
+        </g>
+      ))}
+      <rect x="160" y="380" width="460" height="80" rx="8" fill="#111827" stroke="#1f2937" />
+      {Array.from({ length: 12 }).map((_, i) => (
+        <rect key={i} x={175 + i * 37} y={390 + (i % 3) * 4} width="26" height={40 + (i * 5) % 30} rx="2" fill="#3b82f6" opacity={0.4 + (i % 5) * 0.12} />
+      ))}
+    </svg>
+  );
+}
+
+function EcommerceMockup({ variant = 0 }: { variant?: number }) {
+  const swatches = ["#f5d0c5", "#c5d5f5", "#d5f5c5", "#f5eec5", "#e5c5f5", "#c5f5ee", "#f5c5d5", "#c5e5f5"];
+  if (variant === 0) {
+    // Product grid with cart
+    return (
+      <svg viewBox="0 0 640 320" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <rect width="640" height="320" fill="#f6f4ef" />
+        {/* nav */}
+        <rect x="0" y="0" width="640" height="36" fill="#fff" />
+        <text x="20" y="24" fontSize="13" fill="#111" fontFamily="serif" fontWeight="700">SHOP LOCAL</text>
+        <g fill="#333" fontSize="9" fontFamily="sans-serif">
+          <text x="200" y="23">New</text>
+          <text x="240" y="23">Home</text>
+          <text x="285" y="23">Kitchen</text>
+          <text x="335" y="23">Apparel</text>
+          <text x="385" y="23">Gifts</text>
+        </g>
+        {/* search */}
+        <rect x="440" y="10" width="120" height="16" rx="8" fill="#f0ede6" />
+        <text x="448" y="21" fontSize="8" fill="#999" fontFamily="sans-serif">Search products…</text>
+        {/* cart */}
+        <circle cx="580" cy="18" r="4" fill="none" stroke="#111" strokeWidth="1.2" />
+        <path d="M576 14 L584 14 L582 20 L578 20 Z" fill="none" stroke="#111" strokeWidth="1.2" />
+        <circle cx="586" cy="12" r="5" fill="#ff00ff" />
+        <text x="583.5" y="14.5" fontSize="6" fill="#fff" fontFamily="sans-serif" fontWeight="700">3</text>
+        <text x="596" y="22" fontSize="9" fill="#111" fontFamily="sans-serif" fontWeight="700">$84</text>
+
+        {/* filters */}
+        <text x="20" y="60" fontSize="9" fill="#666" fontFamily="sans-serif" letterSpacing="1.5">FILTER · 248 ITEMS</text>
+        {/* product grid */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const x = 20 + (i % 4) * 155;
+          const y = 78 + Math.floor(i / 4) * 120;
+          return (
+            <g key={i}>
+              <rect x={x} y={y} width="140" height="90" rx="4" fill={swatches[i]} />
+              <circle cx={x + 70} cy={y + 45} r="26" fill="#fff" opacity="0.5" />
+              <rect x={x + 55} y={y + 32} width="30" height="26" rx="3" fill="#333" opacity="0.55" />
+              <text x={x} y={y + 104} fontSize="8" fill="#111" fontFamily="sans-serif" fontWeight="700">Item {i + 1}</text>
+              <text x={x + 108} y={y + 104} fontSize="8" fill="#111" fontFamily="sans-serif">${18 + i * 4}</text>
+            </g>
+          );
+        })}
+      </svg>
+    );
+  }
+  if (variant === 1) {
+    // Product detail
+    return (
+      <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+        <rect width="640" height="480" fill="#f6f4ef" />
+        <rect x="30" y="30" width="280" height="420" rx="8" fill="#e8c8b6" />
+        <circle cx="170" cy="220" r="100" fill="#fff" opacity="0.55" />
+        <rect x="140" y="180" width="60" height="70" rx="6" fill="#8b4a24" />
+        {[0, 1, 2, 3].map((i) => (
+          <rect key={i} x={30 + i * 66} y="460" width="56" height="10" rx="2" fill="#e8c8b6" opacity={i === 0 ? 1 : 0.5} />
+        ))}
+        <text x="340" y="60" fontSize="9" fill="#999" fontFamily="sans-serif" letterSpacing="2">CERAMICS</text>
+        <text x="340" y="100" fontSize="26" fill="#111" fontFamily="serif" fontWeight="700">Hand-thrown Vase</text>
+        <text x="340" y="128" fontSize="18" fill="#111" fontFamily="sans-serif">$68.00</text>
+        <line x1="340" y1="150" x2="600" y2="150" stroke="#e5e0d5" />
+        <text x="340" y="176" fontSize="10" fill="#666" fontFamily="sans-serif">Small-batch stoneware from a</text>
+        <text x="340" y="192" fontSize="10" fill="#666" fontFamily="sans-serif">Portland studio. Each piece varies.</text>
+        <text x="340" y="228" fontSize="8" fill="#111" fontFamily="sans-serif" letterSpacing="1.5">COLOR</text>
+        {["#e8c8b6", "#c5d5f5", "#333"].map((c, i) => (
+          <circle key={c} cx={350 + i * 26} cy="248" r="9" fill={c} stroke={i === 0 ? "#111" : "transparent"} strokeWidth="1.5" />
+        ))}
+        <text x="340" y="288" fontSize="8" fill="#111" fontFamily="sans-serif" letterSpacing="1.5">QUANTITY</text>
+        <rect x="340" y="298" width="90" height="30" rx="4" fill="#fff" stroke="#ddd" />
+        <text x="380" y="318" fontSize="11" fill="#111" fontFamily="sans-serif">1</text>
+        <rect x="340" y="345" width="260" height="38" rx="4" fill="#111" />
+        <text x="410" y="369" fontSize="11" fill="#fff" fontFamily="sans-serif" fontWeight="700">Add to cart · $68</text>
+        <rect x="340" y="392" width="260" height="38" rx="4" fill="none" stroke="#111" />
+        <text x="410" y="416" fontSize="11" fill="#111" fontFamily="sans-serif">Buy it now</text>
+      </svg>
+    );
+  }
+  // Cart drawer
+  return (
+    <svg viewBox="0 0 640 480" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
+      <rect width="640" height="480" fill="#f6f4ef" opacity="0.5" />
+      <rect x="240" y="0" width="400" height="480" fill="#fff" />
+      <text x="264" y="46" fontSize="16" fill="#111" fontFamily="serif" fontWeight="700">Your cart (3)</text>
+      <line x1="264" y1="66" x2="616" y2="66" stroke="#eee" />
+      {[0, 1, 2].map((i) => (
+        <g key={i} transform={`translate(264, ${80 + i * 100})`}>
+          <rect width="80" height="80" rx="4" fill={swatches[i]} />
+          <circle cx="40" cy="40" r="22" fill="#fff" opacity="0.5" />
+          <text x="94" y="20" fontSize="11" fill="#111" fontFamily="sans-serif" fontWeight="700">{["Hand-thrown Vase", "Linen Napkins", "Cedar Cutting Board"][i]}</text>
+          <text x="94" y="36" fontSize="9" fill="#999" fontFamily="sans-serif">Color · Natural</text>
+          <text x="94" y="72" fontSize="10" fill="#111" fontFamily="sans-serif">Qty 1</text>
+          <text x="320" y="20" fontSize="11" fill="#111" fontFamily="sans-serif" fontWeight="700" textAnchor="end">${[68, 24, 48][i]}</text>
+          <line x1="0" y1="90" x2="352" y2="90" stroke="#eee" />
+        </g>
+      ))}
+      <text x="264" y="400" fontSize="10" fill="#666" fontFamily="sans-serif">Subtotal</text>
+      <text x="616" y="400" fontSize="10" fill="#111" fontFamily="sans-serif" fontWeight="700" textAnchor="end">$140.00</text>
+      <text x="264" y="418" fontSize="10" fill="#666" fontFamily="sans-serif">Shipping</text>
+      <text x="616" y="418" fontSize="10" fill="#111" fontFamily="sans-serif" textAnchor="end">Free</text>
+      <rect x="264" y="432" width="352" height="34" rx="4" fill="#111" />
+      <text x="440" y="454" fontSize="11" fill="#fff" fontFamily="sans-serif" fontWeight="700" textAnchor="middle">Checkout →</text>
+    </svg>
+  );
+}
+
+function ProjectMockup({
+  slug,
+  variant = 0,
+}: {
+  slug: ProjectSlug;
+  variant?: number;
+}) {
+  if (slug === "bistro") return <BistroMockup variant={variant} />;
+  if (slug === "saas") return <SaasMockup variant={variant} />;
+  return <EcommerceMockup variant={variant} />;
+}
+
 
 function Portfolio() {
   const [active, setActive] = useState<Project | null>(null);
