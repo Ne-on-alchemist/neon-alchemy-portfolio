@@ -743,7 +743,7 @@ function ProjectModal({
         onClick={onClose}
         className="absolute inset-0 bg-black/70 backdrop-blur-xl"
       />
-      <div className="modal-panel relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl">
+      <div className="modal-panel relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[#00f0ff]/20 bg-[#0a0a0f] shadow-[0_0_60px_rgba(0,240,255,0.15)]">
         <button
           type="button"
           onClick={onClose}
