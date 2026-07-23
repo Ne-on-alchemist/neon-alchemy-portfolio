@@ -194,28 +194,68 @@ function Hero() {
   );
 }
 
-const projects = [
+type Project = {
+  name: string;
+  category: string;
+  metric: string;
+  thumb: string;
+  problem: string;
+  solution: string;
+  result: string;
+  overview: string;
+  images: string[];
+};
+
+const projects: Project[] = [
   {
     name: "Bistro Landing",
     category: "Restaurant",
     metric: "+40% bookings",
     thumb: "thumb-1",
+    overview:
+      "A neighborhood bistro needed a landing page that turned casual browsers into confirmed reservations, not just a digital menu.",
+    problem:
+      "The old site buried the reservation flow three clicks deep and loaded a 4MB hero video, killing mobile conversions.",
+    solution:
+      "Rebuilt with a single-scroll structure: hero → menu highlights → reservation CTA sticky on mobile. Replaced video with a CSS gradient and lazy-loaded dish photography.",
+    result:
+      "Bookings up 40% within the first month. Mobile page load dropped from 6.2s to 1.1s. Bounce rate cut in half.",
+    images: ["thumb-1", "thumb-2", "thumb-3"],
   },
   {
     name: "SaaS Launch",
     category: "Product Page",
     metric: "3× conversion",
     thumb: "thumb-2",
+    overview:
+      "A B2B analytics SaaS was launching v2 and needed a product page that clearly communicated a technical value prop to non-technical buyers.",
+    problem:
+      "The MVP page used jargon-heavy copy and stacked six feature blocks with identical layouts — visitors couldn't tell what made the product different.",
+    solution:
+      "Restructured around a single hero benefit, an interactive product tour, and social proof positioned exactly where objections spike.",
+    result:
+      "Free-trial signups tripled in the first quarter. Sales-qualified lead rate up 62%.",
+    images: ["thumb-2", "thumb-3", "thumb-1"],
   },
   {
     name: "Shop Local",
     category: "E-commerce",
     metric: "+150% revenue",
     thumb: "thumb-3",
+    overview:
+      "An independent goods marketplace wanted to compete with big-box e-commerce without matching their engineering budget.",
+    problem:
+      "Product discovery was broken — no filtering, slow search, and a checkout that required account creation before viewing the cart.",
+    solution:
+      "Introduced faceted search, guest checkout, and a distinctive editorial homepage that leaned into the marketplace's curatorial identity.",
+    result:
+      "Revenue up 150% year-over-year. Cart abandonment down 34%. Repeat-purchase rate up 2.1×.",
+    images: ["thumb-3", "thumb-1", "thumb-2"],
   },
 ];
 
 function Portfolio() {
+  const [active, setActive] = useState<Project | null>(null);
   return (
     <section id="work" className="relative py-32">
       <div className="mx-auto max-w-7xl px-6">
@@ -245,38 +285,152 @@ function Portfolio() {
               className="reveal group relative overflow-hidden rounded-2xl glass transition-transform duration-500 hover:-translate-y-2"
               style={{ transitionDelay: `${i * 60}ms` }}
             >
-              <div className={`thumb aspect-[4/3] w-full ${p.thumb}`}>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <div className="rounded-full bg-black/60 px-5 py-2 text-xs tracked backdrop-blur-md">
-                    View Case Study →
+              <button
+                type="button"
+                onClick={() => setActive(p)}
+                className="block w-full text-left"
+                aria-label={`View case study: ${p.name}`}
+              >
+                <div className={`thumb aspect-[4/3] w-full ${p.thumb}`}>
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <div className="rounded-full bg-black/60 px-5 py-2 text-xs tracked backdrop-blur-md">
+                      View Case Study →
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="p-6">
-                <div className="mb-3 flex items-center gap-2">
-                  <span
-                    className="rounded-full border px-2.5 py-0.5 text-[10px] tracked"
-                    style={{ borderColor: "rgba(0,240,255,0.35)", color: "#00f0ff" }}
+                <div className="p-6">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span
+                      className="rounded-full border px-2.5 py-0.5 text-[10px] tracked"
+                      style={{ borderColor: "rgba(0,240,255,0.35)", color: "#00f0ff" }}
+                    >
+                      {p.category}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{p.name}</h3>
+                  <div
+                    className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-sm"
+                    style={{ color: "#a0a0b0" }}
                   >
-                    {p.category}
-                  </span>
+                    <span>Outcome</span>
+                    <span className="font-semibold" style={{ color: "#ff00ff" }}>
+                      {p.metric}
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-white">{p.name}</h3>
-                <div
-                  className="mt-4 flex items-center justify-between border-t border-white/10 pt-4 text-sm"
-                  style={{ color: "#a0a0b0" }}
-                >
-                  <span>Outcome</span>
-                  <span className="font-semibold" style={{ color: "#ff00ff" }}>
-                    {p.metric}
-                  </span>
-                </div>
-              </div>
+              </button>
             </article>
           ))}
         </div>
       </div>
+      <ProjectModal project={active} onClose={() => setActive(null)} />
     </section>
+  );
+}
+
+function ProjectModal({
+  project,
+  onClose,
+}: {
+  project: Project | null;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    if (!project) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [project, onClose]);
+
+  if (!project) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.name} case study`}
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/70 backdrop-blur-xl"
+      />
+      <div className="relative z-10 flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#12121a] shadow-2xl">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close modal"
+          className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-black/40 text-white/80 backdrop-blur-md transition-all hover:border-[#ff00ff] hover:text-[#ff00ff]"
+        >
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+          </svg>
+        </button>
+
+        <div className="overflow-y-auto">
+          <div className={`thumb aspect-[16/7] w-full ${project.images[0]}`} />
+
+          <div className="p-8 md:p-12">
+            <div className="mb-4 flex flex-wrap items-center gap-3">
+              <span
+                className="rounded-full border px-2.5 py-0.5 text-[10px] tracked"
+                style={{ borderColor: "rgba(0,240,255,0.35)", color: "#00f0ff" }}
+              >
+                {project.category}
+              </span>
+              <span className="text-[10px] tracked" style={{ color: "#a0a0b0" }}>
+                Case Study
+              </span>
+            </div>
+            <h3 className="headline text-3xl text-white md:text-5xl">
+              {project.name}
+            </h3>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed md:text-lg" style={{ color: "#a0a0b0" }}>
+              {project.overview}
+            </p>
+
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {project.images.slice(1).map((img, i) => (
+                <div key={i} className={`thumb aspect-[4/3] w-full overflow-hidden rounded-xl ${img}`} />
+              ))}
+            </div>
+
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              {[
+                { label: "Problem", body: project.problem, color: "#ff00ff" },
+                { label: "Solution", body: project.solution, color: "#00f0ff" },
+                { label: "Result", body: project.result, color: "#ff00ff" },
+              ].map((b) => (
+                <div key={b.label} className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+                  <div className="text-[10px] tracked" style={{ color: b.color }}>
+                    {b.label}
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-white/80">
+                    {b.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex items-center justify-between border-t border-white/10 pt-6 text-sm">
+              <span style={{ color: "#a0a0b0" }}>Outcome</span>
+              <span className="font-semibold" style={{ color: "#ff00ff" }}>
+                {project.metric}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
