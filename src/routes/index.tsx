@@ -4,16 +4,16 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Neon Alchemist — Websites That Turn Visitors Into Customers" },
+      { title: "Websites That Turn Visitors Into Customers" },
       {
         name: "description",
         content:
           "Conversion-focused web designer for international clients. Strategic design and clean code that drives measurable results.",
       },
-      { property: "og:title", content: "Neon Alchemist — Conversion-Focused Web Design" },
+      { property: "og:title", content: "Websites That Turn Visitors Into Customers" },
       {
         property: "og:description",
-        content: "Strategic design and clean code for businesses that want results.",
+        content: "Conversion-focused web designer for international clients. Strategic design and clean code that drives measurable results.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
