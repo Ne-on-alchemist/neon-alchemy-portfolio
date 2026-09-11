@@ -68,7 +68,7 @@ function Nav() {
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:py-6">
         <a href="#top" className="text-lg font-bold tracked cyan-text-glow" style={{ color: "#00f0ff" }}>
-          Neon<span className="text-white/90">/</span>Alchemist
+          NEO<span className="text-white/90">/</span>ALCHEMIST
         </a>
         <div className="hidden items-center gap-10 md:flex">
           {[
@@ -999,7 +999,7 @@ function Contact() {
                   <div className="text-[10px] tracked" style={{ color: "#a0a0b0" }}>
                     Telegram
                   </div>
-                  <div className="mt-1 text-white">@NeonAlchemist</div>
+                  <div className="mt-1 text-white">@NeoAlchemist</div>
                 </div>
                 <span
                   className="transition-transform group-hover:translate-x-1"
